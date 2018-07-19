@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+{% load static %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_style.css' %}" media="all" />
+
+    <style>
+        .Search {
+            position: relative;
+            left: 30%;
+            top: 50px;
+            width: 500px;
+            text-align: center;
+{#            border: 1px solid blue;#}
+        }
+        .form {
+            left: 50%;
+            margin: 33px;
+            margin-left: -249px;
+            border: 3px solid #d6ffd7;
+            position: relative;
+            width: 100%;
+        }
+        .glyphicon {
+            position: relative;
+            top: 0px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            height: 50px;
+            width: 22%;
+            font-size: 25px;
+            background-color: #d6ffd7;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">找工作</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/home/">主页 <span class="sr-only">(current)</span></a></li>
+        <li><a>&nbsp;&nbsp;</a></li>
+        <li><a href="/user/login/">登录</a></li>
+        <li><a>|</a></li>
+        <li><a href="/user/regist/">注册</a></li>
+      </ul>
+    {% if data %}
+        <ul class="nav navbar-nav navbar-right">
+        <li><img style="border: 1px solid gainsboro;border-radius: 50px;width: 30px;height: 30px;
+                            margin-top: 7px;margin-left: 150px;"
+                         src="/static/upload/{{ data.photo }}"></li>
+        <li><a href="#">{{ data.username }}</a></li>
+        <li role="presentation"><a href="/user/logout/">退出</a></li>
+      </ul>
+    {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{#  搜索框  #}
+
+<div class="Search">
+    <h1 style="color: #333;font-size: 50px;">找工作,超简单</h1>
+
+    <div class="form">
+        <form action="/home/charts/" method="get" id="sform">
+            <input id="city-name" value="全国" name="cityKw" type="hidden">
+            <input placeholder="输入职位名称" list="zhiwei" value="" id="schbar-form-keyword" name="jobKw" type="text" style="height: 50px;width: 77%;margin-right: 1px;font-size: 25px;border: none;">
+            <datalist id = "zhiwei">
+                <option value = "Python开发工程师">
+                <option value = "Java">
+                <option value = "Python web">
+                <option value = "机器学习">
+                <option value = "python爬虫工程师">
+            </datalist>
+            <button type="submit" class="glyphicon"><span style="color: blue">Search</span></button>
+        </form>
+    </div>
+    <div style="color:#999;font-size:16px;margin-bottom:40px" class="j-index-search-desc">
+
+        <select name = "location" onchange="selectCity(this)">
+            <option value = "西安" selected>全国</option>
+            <option value = "成都">成都</option>
+    	    <option value = "北京">北京</option>
+    	    <option value = "深圳">深圳</option>
+    	    <option value = "西安">西安</option>
+        </select>
+        请选择城市
+    </div>
+</div>
+<!--页脚开始-->
+ <div class="foot_txt_box">
+    <div class="foot_txt">
+        <p>
+            注册登录遇到问题？请拨打 4000-168-168<em>|</em><a style="cursor: pointer" target="_blank" onclick="alert('请联系左方电话')">我要提意见</a></p>
+        <p>
+            CopyRight &copy; 2000-2017 LWL,All Rights Reserved. 版权所有 千峰教育科技有限公司</p>
+        <p>
+            电信业务审批[2006]字第92号；经营许可证编号： <a target="_blank" href="">
+                京ICP证060175号</a>；公安备案号码：京公网安备 110108901166号；</p>
+        <div class="foot_t_r">
+            <a target="_blank" style="width: 100px;" class="jjwz" href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001041200160">
+                经营性网站备案信息
+            </a>
+            <a target="_blank" style="width: 100px;" class="jftx" href="http://fzp.bjhd.gov.cn/">北京海淀警方提醒</a>
+        </div>
+    </div>
+</div>
+<!--页脚结束-->
+<script type="text/javascript" src="{% static 'js/jquery-1.8.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+    $(function () {
+        console.log('你在看什么？想不想加入我们？')
+    });
+    function selectCity(city) {
+        // 选择城市
+        $('#city-name')[0].value = city.value;
+
+        //发送异步请求，请将返回的数据添加到datalist中
+
+    }
+</script>
+</body>
+</html>

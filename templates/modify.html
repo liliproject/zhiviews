@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_style.css' %}" media="all" />
+                  
+    <style type="text/css">
+        #img_code
+        {
+            width: 149px;
+            height: 56px;
+        }
+        body
+        {
+            background: #f7f7f7;
+        }
+        #home {
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            background-color: #d6ffd7;
+            color: blue;
+            text-align: center;
+            padding-top: 10px;
+        }
+    </style>
+<title>
+	修改密码
+</title></head>
+<body>
+<div id="home"><a href="/home/">首页</a></div>
+<div class="layout" style="min-height: 900px;top: 0px;">
+    <div class="content">
+
+        <h1 class="title_big">
+            <span>一个帐号，连接所有平台</span></h1>
+        <div class="content_frame">
+            <div class="menu">
+                <p>
+                    <a class="current" href="javascript:;">修改密码</a>
+                </p>
+            </div>
+            <form id="form1" method="post" action="/user/modify/">
+                {% csrf_token %}
+            <ul class="list">
+                <li>
+                    <input type="text" id="txt_LoginName" name="username" value="{{ username }}" placeholder="用户名" class="login_input input_user input_width01" /></li>
+                    <span style="color: red">{{ errors.username }}</span>
+                    <span style="color: red">{{ erroruname }}</span>
+                <li class="pow">
+                    <input type="password" id="txt_Password" name="password" value="{{ password }}" class="login_input input_password input_width01" placeholder="密码" />
+                    <span style="color: red">{{ errors.password }}</span>
+                </li>
+                <li class="pow">
+                    <input type="password" id="txt_Password2" name="password2" value="{{ password2 }}" class="login_input input_password input_width01" placeholder="再次输入密码" />
+                    <span style="color: red">{{ errors.password2 }}</span>
+                </li>
+                <li id="li_code" class="yz">
+                    <input id="txt_Code" name="txt_Code" type="text" value="{{ code }}" placeholder="输入右侧验证码" class="login_input input_width02" />
+                    <div id="div_CodeContainer" class="code">
+                        <img id="img_code" src="/user/verifycode" alt="点击图片换一张" style="width:149px;height:56px;" onclick="refresh(this)"/>
+                    </div>
+                    <a href="javascript:;" title="看不清换一张" act="changeCode" class="refresh" onclick="refresh(img_code)">看不清换一张</a>
+                    <p style="color: red;margin-top: 70px;">{{ errorcode }}</p>
+                </li>
+                <li class="zddl">
+                    <div class="content_frame_left">
+                        <label>
+                            <input id="cbx_keepState" name="cbx_keepState" type="checkbox" checked="checked" value="1" />自动登录
+                        </label>
+                    </div>
+                    <div class="content_frame_right">
+                        <a href="/user/login/" >想起来了，去登录</a>
+                    </div>
+                </li>
+                <li>
+                    <input id="btn_Login" type="button" class="input_orange button_380_55" value="确认修改" onclick="mysubmit()"/>
+                </li>
+            </ul>
+            </form>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <!--页脚开始-->
+     <div class="foot_txt_box">
+        <div class="foot_txt">
+            <p>
+                注册登录遇到问题？请拨打 4000-168-168<em>|</em><a style="cursor: pointer" target="_blank" onclick="alert('请联系左方电话')">我要提意见</a></p>
+            <p>
+                CopyRight &copy; 2000-2017 LWL,All Rights Reserved. 版权所有 千峰教育科技有限公司</p>
+            <p>
+                电信业务审批[2006]字第92号；经营许可证编号： <a target="_blank" href="">
+                    京ICP证060175号</a>；公安备案号码：京公网安备 110108901166号；</p>
+            <div class="foot_t_r">
+                <a target="_blank" class="jjwz" href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001041200160">
+                    经营性网站备案信息</a><a target="_blank" class="jftx" href="http://fzp.bjhd.gov.cn/">北京海淀警方提醒</a></div>
+        </div>
+    </div>
+    <!--页脚结束-->
+</div>
+    <script type="text/javascript" src="{% static 'js/jquery-1.8.1.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            refresh($('img')[0]);
+        });
+        function refresh(img) {
+            // 解决图片不刷新的问题，加一个随机数参数
+            console.log('刷新图片验证码');
+            img.src = '/user/verifycode?tm=' +Math.random();
+        }
+        function mysubmit() {
+            //提交form表单
+            console.log('提交数据');
+            $('form').submit();
+        }
+    </script>
+</body>
+</html>
