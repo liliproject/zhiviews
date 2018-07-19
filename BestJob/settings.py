@@ -25,7 +25,7 @@ SECRET_KEY = '@j+&x(sfe^vuzz4fp5n_!83mn!h(ts(gd3s%(fm)ds_p&kog0u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 APPEND_SLASH = False
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'middleware.useragent.UserAgentMiddleware',
+    'middleware.ip_count.IpCountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,11 +79,15 @@ WSGI_APPLICATION = 'BestJob.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'users',
+        'HOST': '127.0.0.1',
+        'POST': '3306',
+        'USER': 'root',
+        'PASSWORD':'',
+        'CHARSET':'UTF8'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

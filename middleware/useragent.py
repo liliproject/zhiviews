@@ -10,7 +10,6 @@ class UserAgentMiddleware(MiddlewareMixin):
         super(UserAgentMiddleware, self).__init__(get_response)
 
     def process_request(self,request):
-        print(request.META)
         user_agent = request.META.get("HTTP_USER_AGENT")
         if user_agent.strip() == '':
             return HttpResponse('<p>爬虫太low</p>')
